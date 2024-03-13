@@ -32,7 +32,7 @@ function Chart() {
             dataKey="temperature"
           >
             <Cell fill={data[data.length - 1].temperature > 60 ? "#ff0000" : "#8884d8"} /> 
-            <Cell fill="#808080" /> // Set the color of the "gate" temperature to green
+            <Cell fill="#808080" /> 
           </Pie>
           <text x={200} y={200} dy={8} textAnchor="middle" fill="#000">{`${data[data.length - 1].temperature}°c`}</text>
         </PieChart>
