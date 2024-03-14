@@ -1,5 +1,5 @@
 import Chart from "./chart";
-import Vibration from "./vibration";
+import Vibration2 from "./vibration2";
 import Voltage from "./voltage";
 import "./App.css";
 function App() {
@@ -11,7 +11,7 @@ function App() {
       </div>
       <div className="vibrat">
         {" "}
-        <Vibration />
+        <Vibration2/>
       </div>
       <div className="volt">
         {" "}
