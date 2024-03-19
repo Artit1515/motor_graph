@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 function Chart() {
   const [data, setData] = useState([]);
-
+  const url ="/api/devices/get/last_data";
+  const motorId ="NodeMCU_ESP8266"
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newDataPoint = {
-        temperature: Math.floor(Math.random() * 120),
-      };
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(url, { motor_id: motorId });
+        const newData = {
+          temperature: response.data.msg.temperature,
+        };
+        setData(prevData => [...prevData, newData]);
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+      }
+    };
 
-      setData(prevData => [...prevData, newDataPoint]);
-    }, 2000); 
-
+    fetchData();
+    const interval = setInterval(fetchData, 2000); 
+    console.log("fetching data");
     return () => clearInterval(interval);
   }, []);
 
@@ -34,10 +43,8 @@ function Chart() {
             <Cell fill={data[data.length - 1].temperature > 60 ? "#ff0000" : "#8884d8"} /> 
             <Cell fill="#808080" /> 
           </Pie>
-          <text x={200} y={200} dy={8} textAnchor="middle" fill="#000">{`${data[data.length - 1].temperature}°c`}</text>
         </PieChart>
       )}
-      {data.length > 0 && <p>Last temperature: {data[data.length - 1].temperature}</p>}
     </>
   );
 }
